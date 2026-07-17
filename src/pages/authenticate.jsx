@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import '../styles/authenticate.css';
+import {Link, useNavigate} from 'react-router-dom';
 
 export default function Authenticate() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
 
         try {
-            const response = await fetch('http://localhost:8080/auth/login', {
+            const response = await fetch('http://localhost:8080/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password }),
@@ -24,8 +26,7 @@ export default function Authenticate() {
             const data = await response.json();
             localStorage.setItem('token', data.token);
 
-            // temporary — replace with real navigation once routing exists
-            alert('Login successful!');
+            navigate('/home')
 
         } catch (err) {
             setError(err.message);
@@ -61,7 +62,7 @@ export default function Authenticate() {
                 </form>
 
                 <p className="login-footer">
-                    Not a user? <a href="/register" className="login-link">Create an account</a>
+                    Not a user? <Link to="/register" className="login-link">Create an account</Link>
                 </p>
             </div>
         </div>
