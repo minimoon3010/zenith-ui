@@ -1,0 +1,84 @@
+/* login.css */
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: var(--color-star);
+    text-align: center;
+    width: 380px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.login-input {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    color: var(--color-star);
+    font-family: var(--font-body), serif;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.login-input::placeholder {
+    color: var(--color-muted);
+}
+
+.login-input:focus {
+    border-color: var(--color-cyan);
+}
+
+.login-button {
+    background: var(--color-green);
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--space-md);
+    color: var(--color-space);
+    font-family: var(--font-heading), sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    margin-top: var(--space-sm);
+}
+
+.login-button:hover {
+    opacity: 0.85;
+}
+
+.login-footer {
+    margin-top: var(--space-lg);
+    font-size: 0.9rem;
+    color: var(--color-muted);
+}
+
+.login-link {
+    color: var(--color-cyan);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
