@@ -47,3 +47,11 @@ h1, h2, h3 {
     font-family: var(--font-display), serif;
     font-style: italic;
 }
+
+:root {
+    --header-clearance: 72px;
+}
+
+.dashboard-page {
+    padding-top: calc(var(--space-lg) + var(--header-clearance));
+}
