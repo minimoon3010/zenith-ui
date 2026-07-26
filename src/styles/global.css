@@ -1,0 +1,57 @@
+@import './tokens.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-space);
+    color: var(--color-star);
+    font-family: var(--font-body), serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+            radial-gradient(ellipse 1000px 600px at 50% 100%, rgb(84 23 56 / 0.5), transparent 70%),
+            radial-gradient(ellipse 800px 500px at 50% 100%, rgb(41 17 98 / 0.4), transparent 75%),
+            radial-gradient(ellipse 600px 400px at 50% 100%, rgb(45 68 72 / 0.3), transparent 80%);
+    filter: blur(40px);
+    mix-blend-mode: screen;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 1; }
+}
+
+@keyframes drift {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(var(--drift-x), var(--drift-y)); }
+}
+
+h1, h2, h3 {
+    font-family: var(--font-heading), serif;
+}
+
+.display {
+    font-family: var(--font-display), serif;
+    font-style: italic;
+}
+
+:root {
+    --header-clearance: 72px;
+}
+
+.dashboard-page {
+    padding-top: calc(var(--space-lg) + var(--header-clearance));
+}

@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Dashboard (Command Deck) — glass widget system
+   Extends tokens.css. Same frosted-glass language as .login-card.
+   ========================================================================== */
+
+.dashboard-page {
+    min-height: 100vh;
+    padding: calc(var(--space-lg) + 56px) var(--space-lg) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+/* Base glass surface — every dashboard box shares this */
+.glass-panel {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    color: var(--color-star);
+}
+
+/* --------------------------------------------------------------------------
+   Mood check-in — narrow slider banner + progressive fade-in reason box
+   -------------------------------------------------------------------------- */
+
+.mood-checkin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.mood-slider-box {
+    width: min(400px, 90%);
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    text-align: center;
+}
+
+.mood-slider-prompt {
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.9rem;
+    color: var(--color-muted);
+}
+
+.mood-slider {
+    width: 100%;
+    accent-color: var(--color-cyan);
+}
+
+.mood-view-past {
+    font-size: 0.75rem;
+    color: var(--color-cyan);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.mood-view-past:hover {
+    text-decoration: underline;
+}
+
+/* Reason box — hidden by default, toggle `.mood-reason-visible` via JS state */
+.mood-reason-box {
+    width: min(600px, 90%);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 0 var(--space-lg);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
+}
+
+.mood-reason-box.mood-reason-visible {
+    opacity: 1;
+    max-height: 80px;
+    padding: var(--space-md) var(--space-lg);
+}
+
+.mood-reason-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-sm);
+    padding: var(--space-sm) var(--space-md);
+    color: var(--color-star);
+    font-family: var(--font-body), sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.mood-reason-input:focus {
+    border-color: var(--color-cyan);
+}
+
+.mood-reason-confirm,
+.mood-reason-dismiss {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.mood-reason-confirm {
+    background: rgb(30 80 67);
+    color: var(--color-green);
+}
+
+.mood-reason-dismiss {
+    background: rgba(244, 114, 182, 0.15);
+    color: var(--color-pink);
+}

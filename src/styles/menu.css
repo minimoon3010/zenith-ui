@@ -1,0 +1,30 @@
+.user-menu {
+    position: fixed;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    z-index: 10;
+    outline: none;
+}
+
+.user-menu-item {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-star);
+    text-decoration: none;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    background: none;
+    border: 1px solid transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.user-menu-item:hover {
+    background: rgb(68 29 44 / 0.5);
+    border-color: var(--color-raspberry);
+}
+
+.user-menu-signout {
+    color: var(--color-raspberry);
+}
