@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import {useState, useEffect} from 'react';
 import UserMenu from './design/UserMenu.jsx';
 import '../styles/dashboard.css';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
+import {viewUserProfile} from '../utils/user.js';
 
 // Mock data — swap for real fetches once endpoints are wired up
 const MOCK_CONSTELLATIONS = ['Morning Routine', 'Uni Coursework', 'Home Admin'];
@@ -12,12 +12,17 @@ const MOCK_TRANSACTIONS = ['Coffee — £4.20', 'Groceries — £32.10', 'Uber �
 export default function Dashboard() {
     const navigate = useNavigate();
 
-    // Level / XP — replace with real user data from context or a fetch
-    const firstName = 'Iba';
-    const level = 0;
-    const xp = 40;
-    const xpForNextLevel = 100;
-    const streak = 4;
+    /** @type {[UserProfile|null, Function]} */
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    const firstName = profile?.firstName;
+    const currentLevel = profile?.level ?? 0;
+    const currentXp = profile?.xp ?? 0;
+    const xpForNextLevel = 100 * Math.pow(2, currentLevel);
+    const xpPercent = Math.min(100, Math.round((currentXp / xpForNextLevel) * 100));
+
 
     const [moodValue, setMoodValue] = useState(5);
     const [moodSubmittedOnce, setMoodSubmittedOnce] = useState(false);
@@ -28,13 +33,29 @@ export default function Dashboard() {
         navigate('/');
     };
 
+    useEffect(() => {
+        async function loadProfile() {
+            try {
+                /** @type {UserProfile} */
+                const data = await viewUserProfile();
+                setProfile(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadProfile().catch((err) => console.error('Unexpected error in loadProfile:', err));
+    }, []);
+
     const handleSliderRelease = () => {
         setMoodSubmittedOnce(true);
     };
 
     const handleMoodConfirm = () => {
         // POST /api/mood/new — status: moodValue, energy: moodReason
-        console.log('Submitting mood:', { status: moodValue, energy: moodReason });
+        console.log('Submitting mood:', {status: moodValue, energy: moodReason});
         setMoodSubmittedOnce(false);
         setMoodReason('');
     };
@@ -44,11 +65,9 @@ export default function Dashboard() {
         setMoodReason('');
     };
 
-    const xpPercent = Math.min(100, Math.round((xp / xpForNextLevel) * 100));
-
     return (
         <div className="dashboard-page">
-            <UserMenu onSignOut={handleSignOut} />
+            <UserMenu onSignOut={handleSignOut}/>
 
             {/* Level / streak banner */}
             <div className="glass-panel level-banner">
@@ -57,12 +76,12 @@ export default function Dashboard() {
                     <div className="level-banner-avatar-circle">
                         <button className="dashboard-page-trigger" aria-label="View Profile">
                             <svg viewBox="0 0 32 32" className="constellation-icon" aria-hidden="true">
-                                <line x1="9" y1="10" x2="16" y2="22" className="constellation-line" />
-                                <line x1="16" y1="22" x2="24" y2="9" className="constellation-line" />
-                                <line x1="9" y1="10" x2="24" y2="9" className="constellation-line" />
-                                <circle cx="9" cy="10" r="2" className="constellation-star" />
-                                <circle cx="16" cy="22" r="2" className="constellation-star" />
-                                <circle cx="24" cy="9" r="2" className="constellation-star" />
+                                <line x1="9" y1="10" x2="16" y2="22" className="constellation-line"/>
+                                <line x1="16" y1="22" x2="24" y2="9" className="constellation-line"/>
+                                <line x1="9" y1="10" x2="24" y2="9" className="constellation-line"/>
+                                <circle cx="9" cy="10" r="2" className="constellation-star"/>
+                                <circle cx="16" cy="22" r="2" className="constellation-star"/>
+                                <circle cx="24" cy="9" r="2" className="constellation-star"/>
                             </svg>
                         </button>
                     </div>
@@ -71,20 +90,20 @@ export default function Dashboard() {
 
                 <div className="level-banner-identity">
                     <span className="level-banner-greeting">Welcome, {firstName}!</span>
-                    <span className="level-banner-rank">Cosmic Rank - Level {level}</span>
+                    <span className="level-banner-rank">Cosmic Rank - Level {currentLevel}</span>
                 </div>
 
                 <div className="xp-bar-wrap">
                     <div className="xp-bar-label">
                         <span>XP</span>
-                        <span>{xp} / {xpForNextLevel}</span>
+                        <span>{currentXp} / {xpForNextLevel}</span>
                     </div>
                     <div className="xp-bar-track">
-                        <div className="xp-bar-fill" style={{ width: `${xpPercent}%` }} />
+                        <div className="xp-bar-fill" style={{width: `${xpPercent}%`}}/>
                     </div>
                 </div>
 
-                <div className="streak-badge">🔥 {streak} day streak</div>
+                <div className="streak-badge">🔥 1 day streak</div>
             </div>
 
             {/* Mood check-in */}
@@ -114,10 +133,12 @@ export default function Dashboard() {
                         value={moodReason}
                         onChange={(e) => setMoodReason(e.target.value)}
                     />
-                    <button className="mood-reason-confirm" type="button" onClick={handleMoodConfirm} aria-label="Confirm mood">
+                    <button className="mood-reason-confirm" type="button" onClick={handleMoodConfirm}
+                            aria-label="Confirm mood">
                         ✓
                     </button>
-                    <button className="mood-reason-dismiss" type="button" onClick={handleMoodDismiss} aria-label="Dismiss">
+                    <button className="mood-reason-dismiss" type="button" onClick={handleMoodDismiss}
+                            aria-label="Dismiss">
                         ✕
                     </button>
                 </div>
