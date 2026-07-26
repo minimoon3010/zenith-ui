@@ -1,5 +1,5 @@
 import {Link, useNavigate} from 'react-router-dom';
-import UserMenu from './design/UserMenu.jsx';
+import UserMenu from './design/userMenu.jsx';
 import Dashboard from "./dashboard.jsx";
 
 export default function Home() {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getCurrentUserId } from '../utils/auth.js';
-import UserMenu from './design/UserMenu.jsx';
-import '../styles/profile.css';
+import { getCurrentUserId } from '../../utils/auth.js';
+import UserMenu from '../design/userMenu.jsx';
+import '../../styles/profile.css';
 import {useNavigate} from "react-router-dom";
 
 export default function Profile() {

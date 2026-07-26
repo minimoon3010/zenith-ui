@@ -1,4 +1,4 @@
-export default function Star({ count = 120 }) {
+export default function Background({ count = 120 }) {
     const stars = Array.from({ length: count }).map((_, i) => ({
         id: i,
         top: Math.random() * 100,

@@ -22,9 +22,9 @@
 
 .user-menu-item:hover {
     background: rgb(68 29 44 / 0.5);
-    border-color: #ea2b64;
+    border-color: var(--color-raspberry);
 }
 
 .user-menu-signout {
-    color: #EA2B64FF;
+    color: var(--color-raspberry);
 }
